@@ -1,0 +1,159 @@
+openapi: 3.0.0
+info:
+  title: API Doc for LLM Wrapper
+  description: >
+    <div>
+    <h2>Flask-Restful API for  Indu's LLM Wrapper</h2>
+    </div>
+
+    <h3>  </h3> 
+    <div>This API is to test end points of LLM Wrapper with endpoints specified. All end points <b><i>base_url: 127.0.0.1:5000</i></b> and implementation is using Flask Restful API framework.
+    
+    <h3>General instructions:</h3>
+    <ol> 
+      <li> Test each api end point with required parameters and check the response payload.</li>
+      <li>Some of the API end points takes parameters and body also, which need to be updated or added.</li>
+      
+    <li>All API end points are implemented to CRUD operations on LLM Wrapper .</li>
+    <li>One end point allows to get <b>"response"</b> for <b>"user message"</b> from chat-bot.</li>
+    <li>Create/Update and Delete are allowed operations on system role and it's <b>content/instructions</b>.</li>
+    
+    </ol>
+    </div>
+
+    
+    
+
+    
+    
+  version: 1.0.0
+servers:
+  - url: http://127.0.0.1:5000/
+paths:
+  /api/chat-bot/{user_msg}:
+    description: End point to read response from chat-bot, update, create and delete system role content/instructions
+    get:
+      description: Operation to get chat-bot response resource.
+      parameters:
+        - in: path
+          name: user_msg
+          required: true
+          schema:
+            type: string
+            example: "Hi, how are you?"
+      responses:
+        '200':
+          description: Request Successful
+          content:
+            application/json:
+              schema:
+                title: response object
+                type: object
+                properties:
+                  response_id:
+                    type: integer
+                    example: 1
+                  response:
+                    type: string
+                    example: Hi, I am fine
+        '500':
+          description: Internal Server Error
+        '404':
+          description: Resource not found
+
+
+  /api/chat-bot/{system_content}:
+    put:
+      description: Operation to update the system role.
+      parameters:
+        - in: path
+          name: system_content
+          required: true
+          schema:
+            type: string
+            example: Act like father of computer Chales Babbage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                  example: Act like father of computer Chales Babbage
+                
+      responses:
+        '200':
+          description: Successfuly updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  role:
+                    type: string
+                    example: system
+                  content:
+                    type: string
+                    example: Act like father of computer Chales Babbage
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal Server Error
+  
+  /api/chat-bot/:
+    description: End point to delete the existed system role
+    delete:
+      description: Operation to delete the existed system role
+      responses:
+        '200':
+          description: Successfully Deleted
+        '404':
+          description: Resource not found
+        '500':
+          description: Intenal Server Error
+
+    
+    post:
+      description: Operation to create the new system role
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                role:
+                  type: string
+                  example: system
+                content:
+                  type: string
+                  example: Act like marketing executive to Jaguar cars in India
+      responses:
+        '201':
+          description: Successfully Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  role:
+                    type: string
+                    example: system
+                  content:
+                    type: string
+                    example: Act like marketing executive to Jaguar cars in India
+        '500':
+          description: Internal Server Error
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+  
+  
