@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Chat Bot</title>
+</head>
+<script>
+    function update_livechat(messages){
+        msg=document.getElementById("livechat").value;
+        msg = msg+"<br>"+messages;
+        document.getElementById("livechat").value=msg
+    }
+</script>
+<body>
+    {%set txt_msgs=''%}
+    <form method="POST" action="/"> 
+        <div id="container">
+            <div id="panel">
+                <img id="logo" src="/static/img/chat-bot-pic.jpg" width="200" height="200">
+                <div id="input_form">
+                <h2>LLM Wrapper</h2>
+                    <form class="row g-3">
+                        <div class="form-group form-floating mb-3">
+                            <textarea class="form-control" id="livechat" style="height: 230px" readonly>{{system_response}}</textarea>
+                            <label for="livechat">Live Chat</label>
+                          </div>
+                        <div class="col-auto form-floating mb-3">
+                            <input type="text" class="form-control" id="message" name="message"> 
+                            <label for="message">Your Text Here</label>
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-primary mb-3" hidden>Send</button>
+                        </div>
+                    </form>
+                    <br>
+                    <div class="d-flex justify-content-center">
+                        <button type="submit" class="btn btn-danger" onsubmit=update_livechat({{system_response}});>Exit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
