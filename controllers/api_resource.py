@@ -1,20 +1,19 @@
 import json
 from app import *
-import openai
-from flask_cors import CORS
-from flask_restful import Resource
+from flask_restful import Resource, Api
 from ai_utilities import *
 
 
-CORS(app)
+api = Api(app)
 
 response_id = 0
 
 
 class LLMApi(Resource):
     # GET end point
-    def get(self, usr_msg):
-        system_response = get_system_response(usr_msg)
+    def get(self, user_msg):
+        print("Hi, get")
+        system_response = get_system_response(user_msg)
         response_id += 1
         json_response = json.dumps(
             {"reponse_id": response_id, "response": system_response}
@@ -39,4 +38,9 @@ class LLMApi(Resource):
         return json_response
 
 
-api.add_resource(PostResource, "/posts/<int:post_id>")
+api.add_resource(
+    LLMApi,
+    "/api/chat-bot/<user_msg>",
+    "/api/chat-bot/<system_content>",
+    "/api/chat-bot/",
+)

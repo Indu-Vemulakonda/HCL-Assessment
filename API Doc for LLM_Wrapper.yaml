@@ -72,16 +72,7 @@ paths:
           schema:
             type: string
             example: Act like father of computer Chales Babbage
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                content:
-                  type: string
-                  example: Act like father of computer Chales Babbage
-                
+      
       responses:
         '200':
           description: Successfuly updated
@@ -113,7 +104,6 @@ paths:
         '500':
           description: Intenal Server Error
 
-    
     post:
       description: Operation to create the new system role
       requestBody:
