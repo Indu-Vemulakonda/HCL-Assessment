@@ -7,13 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <title>Chat Bot</title>
 </head>
-<script>
-    function update_livechat(messages){
-        msg=document.getElementById("livechat").value;
-        msg = msg+"<br>"+messages;
-        document.getElementById("livechat").value=msg
-    }
-</script>
+
 <body>
     {%set txt_msgs=''%}
     <form method="POST" action="/"> 
@@ -24,7 +18,14 @@
                 <h2>LLM Wrapper</h2>
                     <form class="row g-3">
                         <div class="form-group form-floating mb-3">
-                            <textarea class="form-control" id="livechat" style="height: 230px" readonly>{{system_response}}</textarea>
+                            <textarea class="form-control" id="livechat" name="livechat" style="height: 230px" readonly>{{system_response}}</textarea>
+                            <script>
+                                //get focus at end of the live chat box
+                                txt_chat_area=document.getElementById("livechat");
+                                txt_chat_area.selectionStart = txt_chat_area.selectionEnd = txt_chat_area.value.length;
+                                txt_chat_area.blur();
+                                txt_chat_area.focus();
+                            </script>
                             <label for="livechat">Live Chat</label>
                           </div>
                         <div class="col-auto form-floating mb-3">
@@ -37,7 +38,7 @@
                     </form>
                     <br>
                     <div class="d-flex justify-content-center">
-                        <button type="submit" class="btn btn-danger" onsubmit=update_livechat({{system_response}});>Exit</button>
+                        <button type="button" class="btn btn-danger" onclick="window.open('', '_self', ''); window.close();">Exit</button>
                     </div>
                 </div>
             </div>
