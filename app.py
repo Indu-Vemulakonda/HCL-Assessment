@@ -11,8 +11,8 @@ CORS(app)
 def chat_room():
     if request.method == "POST":
         usr_message = request.form.get("message")
-        # response_msg = "Bot: "+get_system_response(usr_message) #Just to check with hardcoded
-        response_msg = "Bot: " + "Hi, how are you?"
+        response_msg = "Bot: " + get_system_response(usr_message)
+        # response_msg = "Bot: " + "Hi, how are you?"  #Just to check with hardcoded
         return render_template("index.html", system_response=response_msg)
 
     return render_template("index.html")
