@@ -10,12 +10,14 @@ CORS(app)
 @app.route("/", methods=["GET", "POST"])
 def chat_room():
     if request.method == "POST":
-        usr_message = request.form.get("message")
-        response_msg = "Bot: " + get_system_response(usr_message)
-        # response_msg = "Bot: " + "Hi, how are you?"  #Just to check with hardcoded
-        return render_template("index.html", system_response=response_msg)
+        chatbox_msg = request.form.get("livechat")
+        user_msg = request.form.get("message")
+        # response_msg = "Bot: " + "Hi, how are you?"  # Just to check with hardcoded
+        response_msg = "Bot: " + get_system_response(user_msg)
+        chatbox_msg += "\nYou: " + user_msg + "\n" + response_msg + "\n"
+        return render_template("index.html", system_response=chatbox_msg)
 
-    return render_template("index.html")
+    return render_template("index.html", system_response="")
 
 
 if __name__ == "__main__":
